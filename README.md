@@ -2,6 +2,23 @@
 
 A collection of skills designed to help you learn and teach effectively using AI-powered assistants.
 
+## What are OpenCode Skills?
+
+[OpenCode](https://github.com/opencode-ai/opencode) is an AI coding assistant that supports custom skills - reusable instructions that extend its capabilities. Skills are defined in markdown files and can be invoked with slash commands like `/teach`.
+
+These skills are based on the original [teach skill by Matt Pocock](https://github.com/mattpocock/opencode-skills), which pioneered the concept of structured, multi-session learning with AI assistants.
+
+## Getting Started with OpenCode Skills
+
+If you're new to OpenCode skills, here's how to get started:
+
+1. **Install OpenCode**: Follow the instructions at [opencode.ai](https://opencode.ai)
+2. **Create a skills directory**: In your project, create `.opencode/skills/`
+3. **Copy skills**: Copy skill directories into that folder
+4. **Use them**: Start OpenCode and invoke skills with `/skill-name`
+
+For the original teaching skills and more examples, check out [Matt Pocock's skills repository](https://github.com/mattpocock/opencode-skills).
+
 ## Skills
 
 ### `/teach`
