@@ -25,43 +25,97 @@ Use this skill when:
 
 ## Prerequisites
 
-**PDF text extraction tools** must be installed on the user's system:
+### Required Dependencies
 
-- **macOS**: Install via Homebrew
-  ```bash
-  brew install poppler
-  ```
+**PDF text extraction tools** must be installed:
 
-- **Linux (Debian/Ubuntu)**: Install via apt
-  ```bash
-  sudo apt-get install poppler-utils
-  ```
+**macOS:**
+```bash
+brew install poppler
+```
 
-- **Linux (RHEL/CentOS/Fedora)**: Install via yum/dnf
-  ```bash
-  sudo yum install poppler-utils
-  # or
-  sudo dnf install poppler-utils
-  ```
+**Linux:**
+```bash
+# Debian/Ubuntu
+sudo apt-get install poppler-utils
 
-- **Windows**: Install via Chocolatey
-  ```bash
-  choco install poppler
-  ```
+# RHEL/CentOS/Fedora
+sudo dnf install poppler-utils
+```
 
-**Optional: OCR support** (for scanned PDFs without extractable text)
+**Windows:**
+```bash
+choco install poppler
+```
 
-- **All platforms**: Install via pip
-  ```bash
-  pip install ocrmypdf
-  ```
-  
-  **Note**: ocrmypdf requires Tesseract OCR as a dependency:
-  - macOS: `brew install tesseract`
-  - Linux: `sudo apt-get install tesseract-ocr` or equivalent
-  - Windows: Download from https://github.com/UB-Mannheim/tesseract/wiki
+**If dependencies are missing:** The skill will fail immediately with platform-specific installation instructions. Do not attempt automatic installation.
 
-If the tool is not installed, guide the user through installation before proceeding.
+### Optional Dependencies
+
+**OCR support** (for scanned PDFs):
+
+**macOS:**
+```bash
+brew install tesseract
+pip install ocrmypdf
+```
+
+**Linux:**
+```bash
+sudo apt-get install tesseract-ocr
+pip install ocrmypdf
+```
+
+**Windows:**
+Download tesseract from: https://github.com/UB-Mannheim/tesseract/wiki
+```bash
+pip install ocrmypdf
+```
+
+**If OCR dependencies are missing:** When a scanned PDF is detected, the skill will fail with installation instructions for `ocrmypdf` and `tesseract`.
+
+---
+
+## Error Handling
+
+### Corrupted or Invalid PDFs
+
+If a PDF cannot be opened or is corrupted:
+- **Action:** Show a clear error message
+- **Message:** "Error: Cannot open 'filename.pdf'. The file may be corrupted or invalid. Please verify the file and try again."
+- **Behavior:** Stop processing this file, do not skip silently
+
+### Empty or Near-Empty Extraction
+
+If extraction produces less than 100 characters:
+- **Action:** Warn the user and ask if they want to continue
+- **Message:** "Warning: Extracted text is very short (X characters). This PDF may be scanned images or contain minimal text. Continue indexing anyway? (y/n)"
+- **Behavior:** Wait for user response before proceeding
+
+### Duplicate Books
+
+If a book with the same filename already exists in the index:
+- **Action:** Keep the existing entry and warn about the duplicate
+- **Message:** "Warning: 'filename.pdf' is already indexed. Keeping the existing entry. To update, remove the old entry from BOOK-INDEX.md first."
+- **Behavior:** Do not overwrite, let the user decide manually
+
+### Missing Dependencies
+
+If required tools are not installed:
+- **Action:** Fail immediately with clear instructions
+- **Message:** "Error: Required tool 'pdftotext' not found. Install it:\n  macOS: brew install poppler\n  Linux: sudo apt-get install poppler-utils\n  Windows: choco install poppler"
+- **Behavior:** Do not attempt automatic installation
+
+---
+
+## Version Migration
+
+If the `BOOK-INDEX.md` format changes in future versions:
+- **Action:** Require manual migration
+- **Message:** "Notice: BOOK-INDEX.md format has changed. Please review the new format in the skill documentation and update your file manually."
+- **Behavior:** Do not auto-migrate. Document changes clearly in release notes.
+
+---
 
 ## Workflow
 
