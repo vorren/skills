@@ -1,64 +1,69 @@
-# Jordan's OpenCode Skills
+# Teaching Skills for OpenCode
 
-A collection of OpenCode skills for structured learning and teaching.
+A collection of skills designed to help you learn and teach effectively using AI-powered assistants.
 
 ## Skills
 
 ### `/teach`
 
-Teach any topic through structured, multi-session learning with:
+Core teaching skill that establishes a persistent learning environment with:
+- Structured lesson plans and materials organization
 - Spaced repetition and retrieval practice
-- Interactive lessons with quizzes
-- Reference documents and glossaries
-- Progress tracking via learning records
-
-**Inspired by**: Matt Pocock's teaching methodology
+- Progress tracking across sessions
+- Integration with external resources and books
 
 ### `/teach-with-books`
 
-Extend `/teach` with offline learning materials (PDFs, books, papers) that are difficult to find online. Automatically extracts and indexes content to enrich lessons.
+Extends `/teach` to work with offline PDF books and materials:
+- Extracts text content from PDFs using `pdftotext` (poppler)
+- Handles large files intelligently (TOC-only extraction for 100+ page books)
+- Supports OCR for scanned PDFs via `ocrmypdf`
+- Manages book metadata, progress tracking, and citations
+- Handles conflicting terminology across multiple sources
 
-**Features**:
-- Platform-agnostic PDF text extraction
-- Automatic table of contents indexing
-- Lesson generation that references specific book sections
-- Progress tracking across multiple materials
-
-**Requirements**: `poppler` (provides `pdftotext`)
-
-```bash
-# macOS
-brew install poppler
-
-# Linux (Debian/Ubuntu)
-sudo apt-get install poppler-utils
-
-# Windows
-choco install poppler
-```
+**Platform Support:**
+- macOS: `brew install poppler` (+ `brew install tesseract` + `pip install ocrmypdf` for OCR)
+- Linux: `apt-get install poppler-utils` (+ `apt-get install tesseract-ocr` + `pip install ocrmypdf` for OCR)
+- Windows: `choco install poppler` (+ download tesseract + `pip install ocrmypdf` for OCR)
 
 ## Installation
 
-Copy skills to your project's `.opencode/skills/` directory:
+Copy the skill directories to your `.opencode/skills/` folder:
 
 ```bash
-# Copy a specific skill
-cp -r teach ~/your-project/.opencode/skills/
+cp -r teach ~/.opencode/skills/
+cp -r teach-with-books ~/.opencode/skills/
+```
 
-# Copy all skills
-cp -r * ~/your-project/.opencode/skills/
+Or clone this entire repository:
+
+```bash
+git clone https://github.com/vorren/skills.git /tmp/skills
+cp -r /tmp/skills/teach* ~/.opencode/skills/
 ```
 
 ## Usage
 
-```bash
-# Start teaching a new topic
-/teach C++ programming
+Start a teaching session:
 
-# Add offline books to your learning workspace
+```
+/teach C++ programming for system design interviews
+```
+
+Add a PDF book to your learning materials:
+
+```
 /teach-with-books
 ```
 
+## Philosophy
+
+These skills implement evidence-based learning techniques:
+- **Spaced repetition**: Review material at increasing intervals
+- **Active recall**: Test yourself instead of re-reading
+- **Interleaving**: Mix different but related topics
+- **Retrieval practice**: Pull information from memory
+
 ## License
 
-MIT
+MIT - use freely for your own learning or teaching.
